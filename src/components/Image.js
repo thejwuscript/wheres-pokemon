@@ -5,7 +5,7 @@ export default function Image( {onClick1, onClick2} ) {
 
   const handleClick = (e) => {
     onClick1(e);
-    onClick2();
+    onClick2(e);
   };
 
   return (
