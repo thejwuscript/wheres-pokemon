@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 
 describe("Target", () => {
   it("renders an empty circle with a red border", () => {
-    render(<Target position={{x: 30, y:30}}/>);
+    render(<Target position={{ x: 30, y: 30 }} />);
     const target = screen.getByRole("figure");
     const style = window.getComputedStyle(target);
 
@@ -19,7 +19,7 @@ describe("Target", () => {
     const moveDropdownMenuMock = jest.fn();
     render(
       <Target
-        position={{x: 20, y: 20}}
+        position={{ x: 20, y: 20 }}
         onClick1={moveTargetMock}
         onClick2={moveDropdownMenuMock}
       />

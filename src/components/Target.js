@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Target({ position, onClick }) {
-  return <Wrapper position={position} role="figure" onClick={onClick}></Wrapper>;
+  return (
+    <Wrapper position={position} role="figure" onClick={onClick}></Wrapper>
+  );
 }
 
 const Wrapper = styled.div`
@@ -13,6 +15,6 @@ const Wrapper = styled.div`
   background: transparent;
   border-radius: 50%;
   position: absolute;
-  left: ${props => props.position.x + window.scrollX - 25}px;
-  top: ${props => props.position.y + window.scrollY - 25}px;
+  left: ${(props) => props.position.x + window.scrollX - 25}px;
+  top: ${(props) => props.position.y + window.scrollY - 25}px;
 `;

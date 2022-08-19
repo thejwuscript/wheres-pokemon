@@ -13,7 +13,7 @@ function App() {
     if (hasClicked) {
       setVisible(false);
       setHasClicked(false);
-      return
+      return;
     }
 
     e.stopPropagation();
@@ -33,12 +33,7 @@ function App() {
   return (
     <Wrapper onClick={removeTargetAndMenu}>
       <Image onClick={moveTargetAndMenu} />
-      {visible && (
-        <Target
-          position={position}
-          onClick={moveTargetAndMenu}
-        />
-      )}
+      {visible && <Target position={position} onClick={moveTargetAndMenu} />}
       <DropdownMenu visible={visible} position={position} />
     </Wrapper>
   );
@@ -48,5 +43,5 @@ const Wrapper = styled.div`
   display: flex;
   width: min-content;
   padding: 100px;
-`
+`;
 export default App;
