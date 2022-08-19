@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function DropdownMenu({ visible = false }) {
+export default function DropdownMenu() {
   const handleClick = (e) => e.stopPropagation();
 
-  return <Menu visible={visible} role="menu" onClick={handleClick}></Menu>;
+  return <Menu role="menu" onClick={handleClick}></Menu>;
 }
 
 const Menu = styled.div`
@@ -17,7 +17,7 @@ const Menu = styled.div`
   text-align: center;
   gap: 8px;
   padding: 8px;
-  display: ${(props) => (props.visible ? "flex" : "none")};
+  display: flex;
   position: absolute;
   z-index: 2;
   background-color: white;

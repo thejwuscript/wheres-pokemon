@@ -4,21 +4,14 @@ import Target from "./Target";
 import userEvent from "@testing-library/user-event";
 
 describe("Target", () => {
-  it("renders a hidden empty circle with a red border", () => {
-    render(<Target />);
-    const target = screen.getByRole("figure", { hidden: true });
+  it("renders an empty circle with a red border", () => {
+    render(<Target position={{x: 30, y:30}}/>);
+    const target = screen.getByRole("figure");
     const style = window.getComputedStyle(target);
 
-    expect(target).not.toBeVisible();
+    expect(target).toBeVisible();
     expect(style.borderColor).toBe("red");
     expect(style.backgroundColor).toBe("transparent");
-  });
-
-  it("renders a visible circle determined by props", () => {
-    render(<Target visible={true} />);
-    const target = screen.getByRole("figure");
-
-    expect(target).toBeVisible();
   });
 
   it("calls moveTarget and moveDropdownMenu when the target is clicked", () => {
@@ -26,7 +19,7 @@ describe("Target", () => {
     const moveDropdownMenuMock = jest.fn();
     render(
       <Target
-        visible={true}
+        position={{x: 20, y: 20}}
         onClick1={moveTargetMock}
         onClick2={moveDropdownMenuMock}
       />
