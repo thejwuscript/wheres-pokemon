@@ -11,11 +11,11 @@ export default function DropdownMenu({ visible = false, position }) {
       role="menu"
       onClick={handleClick}
     >
-      <li>Pokemon 1</li>
+      <Item>Slowking</Item>
       <hr />
-      <li>Pokemon 2</li>
+      <Item>Wobbuffet</Item>
       <hr />
-      <li>Pokemon 3</li>
+      <Item>Pichu</Item>
     </Menu>
   );
 }
@@ -29,8 +29,6 @@ const Menu = styled.ul`
   list-style: none;
   flex-direction: column;
   align-items: stretch;
-  text-align: center;
-  gap: 8px;
   padding: 8px;
   left: ${(props) => props.position.x + window.scrollX + 22}px;
   top: ${(props) => props.position.y + window.scrollY + 22}px;
@@ -40,4 +38,16 @@ const Menu = styled.ul`
   transition: ${(props) => (props.visible ? "height 0.4s ease" : "unset")};
   overflow: hidden;
   border-radius: 4px;
+`;
+
+const Item = styled.li`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
 `;
