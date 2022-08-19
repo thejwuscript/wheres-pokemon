@@ -1,14 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Target({ position, onClick1, onClick2 }) {
-
-  const handleClick = (e) => {
-    onClick1(e);
-    onClick2(e);
-  }
-
-  return <Wrapper position={position} role="figure" onClick={handleClick}></Wrapper>;
+export default function Target({ position, onClick }) {
+  return <Wrapper position={position} role="figure" onClick={onClick}></Wrapper>;
 }
 
 const Wrapper = styled.div`

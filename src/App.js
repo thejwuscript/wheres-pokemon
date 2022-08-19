@@ -7,7 +7,7 @@ function App() {
   const [visible, setVisible] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const moveTarget = (e) => {
+  const moveTargetAndMenu = (e) => {
     e.stopPropagation();
     setVisible(false);
     setTimeout(() => {
@@ -16,16 +16,13 @@ function App() {
     }, 150);
   };
 
-  const moveDropdownMenu = (e) => {};
-
   return (
     <div>
-      <Image onClick1={moveTarget} onClick2={moveDropdownMenu} />
+      <Image onClick={moveTargetAndMenu} />
       {visible && (
         <Target
           position={position}
-          onClick1={moveTarget}
-          onClick2={moveDropdownMenu}
+          onClick={moveTargetAndMenu}
         />
       )}
       <DropdownMenu visible={visible} position={position} />
