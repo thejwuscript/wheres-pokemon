@@ -12,6 +12,7 @@ export default function DropdownMenu({ visible, position }) {
       style={{
         visibility: visible ? "visible" : "hidden",
         height: visible ? 115 : 0,
+        transition: visible ? "height 0.4s ease" : "unset",
       }}
     >
       <li>Pokemon 1</li>
@@ -40,7 +41,7 @@ const Menu = styled.ul`
   position: absolute;
   z-index: 2;
   background-color: white;
-  transition: height 0.2s ease-out 0s;
+  transition: height 0.4s ease;
   overflow: hidden;
   border-radius: 4px;
 `;

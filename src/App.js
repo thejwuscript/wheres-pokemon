@@ -13,7 +13,7 @@ function App() {
     setTimeout(() => {
       setVisible(true);
       setPosition({ x: e.clientX, y: e.clientY });
-    }, 150);
+    }, 0);
   };
 
   return (
