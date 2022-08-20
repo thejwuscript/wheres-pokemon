@@ -36,8 +36,8 @@ const Menu = styled.div`
   flex-direction: column;
   align-items: stretch;
   padding: 8px;
-  left: ${(props) => props.position.x + window.scrollX + 22}px;
-  top: ${(props) => props.position.y + window.scrollY + 22}px;
+  left: ${(props) => props.position.x + 22}px;
+  top: ${(props) => props.position.y + 22}px;
   position: absolute;
   z-index: 2;
   background-color: white;

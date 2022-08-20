@@ -15,6 +15,6 @@ const Wrapper = styled.div`
   background: transparent;
   border-radius: 50%;
   position: absolute;
-  left: ${(props) => props.position.x + window.scrollX - 25}px;
-  top: ${(props) => props.position.y + window.scrollY - 25}px;
+  left: ${(props) => props.position.x - 25}px;
+  top: ${(props) => props.position.y - 25}px;
 `;

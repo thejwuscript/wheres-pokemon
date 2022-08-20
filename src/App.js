@@ -19,10 +19,8 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        clientX: position.x,
-        clientY: position.y,
-        scrollX: position.scrollX,
-        scrollY: position.scrollY,
+        pageX: position.x,
+        pageY: position.y,
         name: e.target.value,
       }),
     });
@@ -39,7 +37,7 @@ function App() {
     setVisible(false);
     setTimeout(() => {
       setVisible(true);
-      setPosition({ x: e.clientX, y: e.clientY, scrollX: window.scrollX, scrollY: window.scrollY });
+      setPosition({ x: e.pageX, y: e.pageY });
     }, 0);
     setHasClicked(true);
   };
