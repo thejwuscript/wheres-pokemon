@@ -11,15 +11,15 @@ export default function DropdownMenu({ visible = false, position, onItemClick })
       role="menu"
       onClick={handleClick}
     >
-      <Item onClick={onItemClick} type="submit" name="name" value="slowking">
+      <Item onClick={onItemClick} type="submit" name="name" value="Slowking">
         Slowking
       </Item>
       <hr />
-      <Item   onClick={onItemClick} type="submit" name="name" value="wobbuffet">
+      <Item   onClick={onItemClick} type="submit" name="name" value="Wobbuffet">
         Wobbuffet
       </Item>
       <hr />
-      <Item onClick={onItemClick} type="submit" name="name" value="pichu">
+      <Item onClick={onItemClick} type="submit" name="name" value="Pichu">
         Pichu
       </Item>
     </Menu>

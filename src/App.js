@@ -8,14 +8,14 @@ function App() {
   const [visible, setVisible] = useState(false);
   const [position, setPosition] = useState({});
   const [hasClicked, setHasClicked] = useState(false);
+  const [foundPositions, setFoundPositions] = useState([]);
 
-  const handleItemClick = (e) => {
+  const handleItemClick = async (e) => {
     e.preventDefault();
     removeTargetAndMenu();
-    fetch("http://localhost:3001/api/v1/markers", {
+    const response = await fetch("http://localhost:3001/api/v1/markers", {
       method: "POST",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -24,6 +24,11 @@ function App() {
         name: e.target.value,
       }),
     });
+    const data = await response.json();
+    console.log(data.message);
+    if (data.position) {
+      setFoundPositions([...foundPositions, data.position]);
+    }
   };
 
   const moveTargetAndMenu = (e) => {
@@ -51,7 +56,15 @@ function App() {
     <Wrapper onClick={removeTargetAndMenu}>
       <Image onClick={moveTargetAndMenu} />
       {visible && <Target position={position} onClick={moveTargetAndMenu} />}
-      <DropdownMenu visible={visible} position={position} onItemClick={handleItemClick} />
+      <DropdownMenu
+        visible={visible}
+        position={position}
+        onItemClick={handleItemClick}
+      />
+      {foundPositions.length > 0 && foundPositions.map((position, index) => {
+        return <Target key={index} position={position} color="#66FF99" />;
+      })}
+
     </Wrapper>
   );
 }
