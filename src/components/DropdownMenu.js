@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function DropdownMenu({ visible = false, position }) {
+export default function DropdownMenu({ visible = false, position, onItemClick }) {
   const handleClick = (e) => e.stopPropagation();
 
   return (
@@ -11,19 +11,17 @@ export default function DropdownMenu({ visible = false, position }) {
       role="menu"
       onClick={handleClick}
     >
-      <Form>
-        <Item name="name" value="slowking">
-          Slowking
-        </Item>
-        <hr />
-        <Item name="name" value="wobbuffet">
-          Wobbuffet
-        </Item>
-        <hr />
-        <Item name="name" value="pichu">
-          Pichu
-        </Item>
-      </Form>
+      <Item onClick={onItemClick} type="submit" name="name" value="slowking">
+        Slowking
+      </Item>
+      <hr />
+      <Item   onClick={onItemClick} type="submit" name="name" value="wobbuffet">
+        Wobbuffet
+      </Item>
+      <hr />
+      <Item onClick={onItemClick} type="submit" name="name" value="pichu">
+        Pichu
+      </Item>
     </Menu>
   );
 }
@@ -60,14 +58,4 @@ const Item = styled.button`
     color: white;
     cursor: pointer;
   }
-`;
-
-const Form = styled.form`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  background-color: white;
-  border: none;
 `;
