@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Target from "./components/Target";
-import Image from "./components/Image";
-import DropdownMenu from "./components/DropdownMenu";
+import Target from "./Target";
+import Image from "./Image";
+import DropdownMenu from "./DropdownMenu";
 import styled from "styled-components";
+import Timer from "./Timer";
 
 function Game() {
   const [visible, setVisible] = useState(false);
@@ -55,6 +56,7 @@ function Game() {
 
   return (
     <Wrapper onClick={removeTargetAndMenu}>
+      <Timer />
       <Image onClick={moveTargetAndMenu} />
       {visible && <Target position={position} onClick={moveTargetAndMenu} />}
       <DropdownMenu
