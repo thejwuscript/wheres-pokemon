@@ -2,35 +2,35 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 export default function Timer() {
-  const [centiseconds, setCentiseconds] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
+  const [startTime, setStartTime] = useState(null);
+  const [currentTime, setCurrentTime] = useState(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCentiseconds(centiseconds + 1);
-      if (centiseconds === 99) {
-        setCentiseconds(0);
-        setSeconds(seconds + 1);
-      }
-      if (seconds === 59) {
-        setSeconds(0);
-        setMinutes(minutes + 1);
-      }
-    }, 10);
-    return () => clearInterval(interval);
-  }, [centiseconds, seconds, minutes]);
+    setStartTime(new Date());
+  }, []);
 
-  const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
-  const displayCentiseconds =
-    centiseconds < 10 ? `0${centiseconds}` : centiseconds;
-  const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  useEffect(() => {
+    setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+  }, []);
+
+  let seconds;
+  let minutes;
+
+  if (!startTime || currentTime - startTime < 0) {
+    seconds = "00";
+    minutes = "00";
+  } else {
+    const diff = currentTime - startTime;
+    seconds = `${Math.floor((diff / 1000) % 60)}`.padStart(2, "0");
+    minutes = `${Math.floor((diff / 1000 / 60) % 60)}`.padStart(2, "0");
+  }
 
   return (
     <Wrapper>
       <span className="timer">
-        <span>{displayMinutes}</span>:<span>{displaySeconds}</span>:
-        <span>{displayCentiseconds}</span>
+        <span>{minutes}</span>:<span>{seconds}</span>
       </span>
     </Wrapper>
   );
@@ -38,10 +38,10 @@ export default function Timer() {
 
 const Wrapper = styled.div`
   position: fixed;
-  width: 300px;
+  width: 200px;
   height: 72px;
   top: 0;
-  left: calc(100vw / 2 - 150px);
+  left: calc(100vw / 2 - 100px);
   z-index: 1;
   background-color: white;
   display: flex;
@@ -61,8 +61,6 @@ const Wrapper = styled.div`
   }
 
   & span > span {
-    width: 72px;
-    height: 52px;
     display: inline-block;
     text-align: center;
   }
