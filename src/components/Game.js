@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Target from "./Target";
 import Image from "./Image";
 import DropdownMenu from "./DropdownMenu";
 import styled from "styled-components";
 import Timer from "./Timer";
+import Modal from "./Modal";
 
 function Game() {
   const [visible, setVisible] = useState(false);
   const [position, setPosition] = useState({});
   const [hasClicked, setHasClicked] = useState(false);
   const [foundPositions, setFoundPositions] = useState([]);
+  const [gameOver, setGameOver] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (foundPositions.length === 3) {
+      console.log("You win!");
+      setGameOver(true);
+    }
+  }, [foundPositions]);
 
   const handleItemClick = async (e) => {
     e.preventDefault();
@@ -56,7 +66,9 @@ function Game() {
 
   return (
     <Wrapper onClick={removeTargetAndMenu}>
-      <Timer />
+      <Timer gameOver={gameOver} />
+      {gameOver && <StyledButton onClick={() => setShowModal(true)}>Next &#9755;</StyledButton>}
+      {showModal && <Modal closeModal={() => setShowModal(false)}/>}
       <Image onClick={moveTargetAndMenu} />
       {visible && <Target position={position} onClick={moveTargetAndMenu} />}
       <DropdownMenu
@@ -76,6 +88,21 @@ const Wrapper = styled.div`
   display: flex;
   width: min-content;
   padding: 100px;
+`;
+
+const StyledButton = styled.button`
+  position: fixed;
+  top: 7px;
+  right: 20px;
+  font-size: 2.5rem;
+  text-decoration: none;
+  color: white;
+  background-color: green;
+  padding: 4px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
 `;
 
 export default Game;

@@ -1,20 +1,44 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export default function Timer() {
+export default function Timer({ gameOver }) {
   const [startTime, setStartTime] = useState(null);
   const [currentTime, setCurrentTime] = useState(null);
 
   useEffect(() => {
-    setStartTime(new Date());
-  }, []);
+    const time = new Date();
+
+    if (!startTime) setStartTime(time);
+
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 10);
+
+    if (gameOver) {
+      clearInterval(interval);
+      setCurrentTime(time);
+    }
+
+    return () => clearInterval(interval);
+  }, [gameOver, startTime]);
 
   useEffect(() => {
-    setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-  }, []);
+    if (startTime)
+      fetch("http://localhost:3001/api/v1/timers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          start_time: startTime,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+  }, [startTime]);
 
+  let centiseconds;
   let seconds;
   let minutes;
 
@@ -23,6 +47,7 @@ export default function Timer() {
     minutes = "00";
   } else {
     const diff = currentTime - startTime;
+    centiseconds = `${Math.floor((diff % 1000) / 10)}`.padStart(2, "0");
     seconds = `${Math.floor((diff / 1000) % 60)}`.padStart(2, "0");
     minutes = `${Math.floor((diff / 1000 / 60) % 60)}`.padStart(2, "0");
   }
@@ -30,7 +55,8 @@ export default function Timer() {
   return (
     <Wrapper>
       <span className="timer">
-        <span>{minutes}</span>:<span>{seconds}</span>
+        <span>{minutes}</span>:<span>{seconds}</span>:
+        <span>{centiseconds}</span>
       </span>
     </Wrapper>
   );
@@ -38,7 +64,7 @@ export default function Timer() {
 
 const Wrapper = styled.div`
   position: fixed;
-  width: 200px;
+  width: 280px;
   height: 72px;
   top: 0;
   left: calc(100vw / 2 - 100px);
