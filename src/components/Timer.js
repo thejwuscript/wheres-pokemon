@@ -1,26 +1,52 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export default function Timer({ gameOver }) {
+export default function Timer({ gameOver, recordDuration }) {
   const [startTime, setStartTime] = useState(null);
   const [currentTime, setCurrentTime] = useState(null);
+  const [timerId, setTimerId] = useState(null);
 
   useEffect(() => {
     const time = new Date();
+    let interval;
 
     if (!startTime) setStartTime(time);
 
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 10);
+    if (!gameOver) {
+      interval = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 10);
+    }
 
     if (gameOver) {
       clearInterval(interval);
-      setCurrentTime(time);
+      fetch(`http://localhost:3001/api/v1/timers/${timerId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          end_time: time,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const duration =
+            Date.parse(data.end_time) - Date.parse(data.start_time);
+          let seconds = `${Math.floor((duration / 1000) % 60)}`.padStart(
+            2,
+            "0"
+          );
+          let minutes = `${Math.floor((duration / 1000 / 60) % 60)}`.padStart(
+            2,
+            "0"
+          );
+          recordDuration(`${minutes}:${seconds}`);
+        });
     }
 
     return () => clearInterval(interval);
-  }, [gameOver, startTime]);
+  }, [gameOver, startTime, timerId]);
 
   useEffect(() => {
     if (startTime)
@@ -35,7 +61,7 @@ export default function Timer({ gameOver }) {
         }),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => setTimerId(data.id));
   }, [startTime]);
 
   let centiseconds;

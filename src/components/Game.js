@@ -5,6 +5,7 @@ import DropdownMenu from "./DropdownMenu";
 import styled from "styled-components";
 import Timer from "./Timer";
 import Modal from "./Modal";
+import { useNavigate } from "react-router-dom";
 
 function Game() {
   const [visible, setVisible] = useState(false);
@@ -13,6 +14,8 @@ function Game() {
   const [foundPositions, setFoundPositions] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [duration, setDuration] = useState(null);
+  let nagivate = useNavigate();
 
   useEffect(() => {
     if (foundPositions.length === 3) {
@@ -64,11 +67,29 @@ function Game() {
     setHasClicked(false);
   };
 
+  const handleModalSubmit = (name) => {
+    console.log(name)
+    //fetch, post results and name to server
+    fetch('http://localhost:3001/api/v1/rankings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name,
+          duration: duration,
+        })
+    }).then(res => {
+      nagivate("/leaderboard")
+    })
+    //Link to leaderboard
+  }
+
   return (
     <Wrapper onClick={removeTargetAndMenu}>
-      <Timer gameOver={gameOver} />
+      <Timer gameOver={gameOver} recordDuration={setDuration} />
       {gameOver && <StyledButton onClick={() => setShowModal(true)}>Next &#9755;</StyledButton>}
-      {showModal && <Modal closeModal={() => setShowModal(false)}/>}
+      {showModal && <Modal duration={duration} onSubmit={handleModalSubmit} closeModal={() => setShowModal(false)}/>}
       <Image onClick={moveTargetAndMenu} />
       {visible && <Target position={position} onClick={moveTargetAndMenu} />}
       <DropdownMenu

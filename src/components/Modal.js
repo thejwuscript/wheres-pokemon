@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function Modal({closeModal}) {
+export default function Modal({duration, onSubmit}) {
+  const [name, setName] = useState('');
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSubmit(name);
+  }
+
   return (
     <ModalBackground>
       <ModalContainer>
         <CloseButtonContainer>
-          <CloseButton className="closeButton" onClick={closeModal}>X</CloseButton>
+          <Link to="/leaderboard" className="closeButton">X</Link>
         </CloseButtonContainer>
         <ModalTitle className="modalTitle">Record Your Result</ModalTitle>
-        <Form action="">
+        <p>You found all 3 Pokemons in {duration}!</p>
+        <Form onSubmit={handleSubmit}>
           <label htmlFor="name">
-            Name: <Input type="text" name="name" id="name" />
+            Name: <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)}/>
           </label>
           <FormFooter>
-            <Button onClick={closeModal}>Cancel</Button>
-            <Button>Submit</Button>
+            <Link to="/leaderboard">Cancel</Link>
+            <Button type='submit'>Submit</Button>
           </FormFooter>
         </Form>
       </ModalContainer>
