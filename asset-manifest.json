@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/wheres-pokemon/static/js/main.154b252d.js",
+    "main.js": "/wheres-pokemon/static/js/main.2e2c6335.js",
     "static/media/pokemon.webp": "/wheres-pokemon/static/media/pokemon.12518296400fa6a70222.webp",
     "index.html": "/wheres-pokemon/index.html",
-    "main.154b252d.js.map": "/wheres-pokemon/static/js/main.154b252d.js.map"
+    "main.2e2c6335.js.map": "/wheres-pokemon/static/js/main.2e2c6335.js.map"
   },
   "entrypoints": [
-    "static/js/main.154b252d.js"
+    "static/js/main.2e2c6335.js"
   ]
 }
