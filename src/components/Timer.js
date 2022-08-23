@@ -19,7 +19,7 @@ export default function Timer({ gameOver, recordDuration, timerId, setTimerId })
 
     if (gameOver) {
       clearInterval(interval);
-      fetch(`http://localhost:3001/api/v1/timers/${timerId}`, {
+      fetch(`https://sleepy-wave-10213.herokuapp.com/api/v1/timers/${timerId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export default function Timer({ gameOver, recordDuration, timerId, setTimerId })
 
   useEffect(() => {
     if (startTime)
-      fetch("http://localhost:3001/api/v1/timers", {
+      fetch("https://sleepy-wave-10213.herokuapp.com/api/v1/timers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

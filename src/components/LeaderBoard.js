@@ -5,7 +5,7 @@ export default function LeaderBoard() {
   const [rankings, setRankings] = useState([]);
 
   const fetchRankings = async () => {
-    const response = await fetch("http://localhost:3001/api/v1/rankings", {
+    const response = await fetch("https://sleepy-wave-10213.herokuapp.com/api/v1/rankings", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

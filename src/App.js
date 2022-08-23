@@ -6,7 +6,7 @@ import LeaderBoard from "./components/LeaderBoard";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/wheres-pokemon">
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/game" element={<Game />} />

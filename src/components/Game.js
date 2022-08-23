@@ -29,7 +29,7 @@ function Game() {
     e.preventDefault();
     removeTargetAndMenu();
 
-    const response = await fetch("http://localhost:3001/api/v1/markers", {
+    const response = await fetch("https://sleepy-wave-10213.herokuapp.com/api/v1/markers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ function Game() {
   
 
   const handleModalSubmit = (name) => {
-    fetch('http://localhost:3001/api/v1/rankings', {
+    fetch('https://sleepy-wave-10213.herokuapp.com/api/v1/rankings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
