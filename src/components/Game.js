@@ -15,8 +15,8 @@ function Game() {
   const [gameOver, setGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [duration, setDuration] = useState(null);
-  let nagivate = useNavigate();
-
+  let navigate = useNavigate();
+  
   useEffect(() => {
     if (foundPositions.length === 3) {
       console.log("You win!");
@@ -67,9 +67,9 @@ function Game() {
     setHasClicked(false);
   };
 
+  
+
   const handleModalSubmit = (name) => {
-    console.log(name)
-    //fetch, post results and name to server
     fetch('http://localhost:3001/api/v1/rankings', {
       method: 'POST',
       headers: {
@@ -80,9 +80,8 @@ function Game() {
           duration: duration,
         })
     }).then(res => {
-      nagivate("/leaderboard")
+      if (res.ok) navigate('/leaderboard')
     })
-    //Link to leaderboard
   }
 
   return (
