@@ -16,22 +16,8 @@ function Game() {
   const [showModal, setShowModal] = useState(false);
   const [duration, setDuration] = useState(null);
   const [timerId, setTimerId] = useState(null);
-  const [pageLoaded, setPageLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   let navigate = useNavigate();
-
-  useEffect(() => {
-    const onPageLoad = () => {
-      setPageLoaded(true);
-    };
-
-    if (document.readyState === "complete") {
-      onPageLoad();
-    } else {
-      window.addEventListener("load", onPageLoad);
-    };
-    
-    return () => window.removeEventListener("load", onPageLoad);
-  }, []);
 
   useEffect(() => {
     if (foundPositions.length === 3) {
@@ -104,7 +90,7 @@ function Game() {
 
   return (
     <Wrapper onClick={removeTargetAndMenu}>
-      {pageLoaded && (
+      {imageLoaded && (
         <Timer
           gameOver={gameOver}
           recordDuration={setDuration}
@@ -124,7 +110,7 @@ function Game() {
           closeModal={() => setShowModal(false)}
         />
       )}
-      <Image onClick={moveTargetAndMenu} />
+      <Image onClick={moveTargetAndMenu} imageLoaded={setImageLoaded} />
       {visible && <Target position={position} onClick={moveTargetAndMenu} />}
       <DropdownMenu
         visible={visible}
