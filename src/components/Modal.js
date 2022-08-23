@@ -1,35 +1,44 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-export default function Modal({duration, onSubmit}) {
-  const [name, setName] = useState('');
+export default function Modal({ duration, onSubmit }) {
+  const [name, setName] = useState("");
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(name);
-  }
+  };
 
   return (
     <ModalBackground>
       <ModalContainer>
         <CloseButtonContainer>
-          <Link to="/leaderboard" className="closeButton">X</Link>
+          <CloseButton to="/leaderboard" className="closeButton">
+            X
+          </CloseButton>
         </CloseButtonContainer>
         <ModalTitle className="modalTitle">Record Your Result</ModalTitle>
-        <p>You found all 3 Pokemons in {duration}!</p>
+        <Result>You found all 3 Pokemons in {duration}!</Result>
         <Form onSubmit={handleSubmit}>
           <label htmlFor="name">
-            Name: <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)}/>
+            Name:{" "}
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </label>
           <FormFooter>
-            <Link to="/leaderboard">Cancel</Link>
-            <Button type='submit'>Submit</Button>
+            <CancelButton to="/leaderboard">Cancel</CancelButton>
+            <Button type="submit">Submit</Button>
           </FormFooter>
         </Form>
       </ModalContainer>
     </ModalBackground>
-  )
+  );
 }
 
 const ModalBackground = styled.div`
@@ -47,7 +56,7 @@ const ModalBackground = styled.div`
 
 const ModalContainer = styled.div`
   width: 400px;
-  height: 200px;
+  height: 210px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -63,11 +72,13 @@ const CloseButtonContainer = styled.div`
   align-items: center;
 `;
 
-const CloseButton = styled.button`
+const CloseButton = styled(Link)`
   border: none;
   background-color: transparent;
   cursor: pointer;
   font-size: 1rem;
+  text-decoration: none;
+  color: black;
 `;
 
 const ModalTitle = styled.h3`
@@ -77,6 +88,7 @@ const ModalTitle = styled.h3`
 `;
 
 const Form = styled.form`
+  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -92,6 +104,20 @@ const Input = styled.input`
   width: 100%;
   &:focus {
     outline: none;
+  }
+`;
+
+const CancelButton = styled(Link)`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-decoration: none;
+  color: black;
+  &:hover {
+    background-color: #ccc;
   }
 `;
 
@@ -113,4 +139,11 @@ const FormFooter = styled.div`
   align-items: center;
   margin-top: 10px;
   gap: 10px;
+`;
+
+const Result = styled.span`
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

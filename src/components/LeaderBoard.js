@@ -21,7 +21,7 @@ export default function LeaderBoard() {
   }, []);
 
   return (
-    <div>
+    <Wrapper>
       <h1 style={{textAlign: 'center'}}>Leaderboard</h1>
       <List>
         <Item>
@@ -35,15 +35,23 @@ export default function LeaderBoard() {
           </Item>
         ))}
       </List>
-    </div>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 
 const List = styled.ul`
   display: flex;
   flex-direction: column;
   list-style: none;
-  margin: 30px 180px;
+  margin: 30px 0;
+  width: 600px;
 `;
 
 const Item = styled.li`

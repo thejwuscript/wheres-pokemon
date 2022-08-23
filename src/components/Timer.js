@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export default function Timer({ gameOver, recordDuration }) {
+export default function Timer({ gameOver, recordDuration, timerId, setTimerId }) {
   const [startTime, setStartTime] = useState(null);
   const [currentTime, setCurrentTime] = useState(null);
-  const [timerId, setTimerId] = useState(null);
 
   useEffect(() => {
     const time = new Date();
@@ -46,7 +45,7 @@ export default function Timer({ gameOver, recordDuration }) {
     }
 
     return () => clearInterval(interval);
-  }, [gameOver, startTime, timerId]);
+  }, [gameOver, startTime, timerId, recordDuration, setTimerId]);
 
   useEffect(() => {
     if (startTime)
@@ -62,7 +61,7 @@ export default function Timer({ gameOver, recordDuration }) {
       })
         .then((res) => res.json())
         .then((data) => setTimerId(data.id));
-  }, [startTime]);
+  }, [startTime, setTimerId]);
 
   let centiseconds;
   let seconds;

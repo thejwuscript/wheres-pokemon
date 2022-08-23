@@ -15,6 +15,7 @@ function Game() {
   const [gameOver, setGameOver] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [duration, setDuration] = useState(null);
+  const [timerId, setTimerId] = useState(null);
   let navigate = useNavigate();
   
   useEffect(() => {
@@ -78,6 +79,7 @@ function Game() {
         body: JSON.stringify({
           name: name,
           duration: duration,
+          timer_id: timerId,
         })
     }).then(res => {
       if (res.ok) navigate('/leaderboard')
@@ -86,7 +88,7 @@ function Game() {
 
   return (
     <Wrapper onClick={removeTargetAndMenu}>
-      <Timer gameOver={gameOver} recordDuration={setDuration} />
+      <Timer gameOver={gameOver} recordDuration={setDuration} timerId={timerId} setTimerId={setTimerId} />
       {gameOver && <StyledButton onClick={() => setShowModal(true)}>Next &#9755;</StyledButton>}
       {showModal && <Modal duration={duration} onSubmit={handleModalSubmit} closeModal={() => setShowModal(false)}/>}
       <Image onClick={moveTargetAndMenu} />
