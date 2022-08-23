@@ -16,8 +16,23 @@ function Game() {
   const [showModal, setShowModal] = useState(false);
   const [duration, setDuration] = useState(null);
   const [timerId, setTimerId] = useState(null);
+  const [pageLoaded, setPageLoaded] = useState(false);
   let navigate = useNavigate();
-  
+
+  useEffect(() => {
+    const onPageLoad = () => {
+      setPageLoaded(true);
+    };
+
+    if (document.readyState === "complete") {
+      onPageLoad();
+    } else {
+      window.addEventListener("load", onPageLoad);
+    };
+    
+    return () => window.removeEventListener("load", onPageLoad);
+  }, []);
+
   useEffect(() => {
     if (foundPositions.length === 3) {
       console.log("You win!");
@@ -29,17 +44,20 @@ function Game() {
     e.preventDefault();
     removeTargetAndMenu();
 
-    const response = await fetch("https://sleepy-wave-10213.herokuapp.com/api/v1/markers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        pageX: position.x,
-        pageY: position.y,
-        name: e.target.value,
-      }),
-    });
+    const response = await fetch(
+      "https://sleepy-wave-10213.herokuapp.com/api/v1/markers",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          pageX: position.x,
+          pageY: position.y,
+          name: e.target.value,
+        }),
+      }
+    );
     const data = await response.json();
     console.log(data.message);
     if (data.position) {
@@ -68,29 +86,44 @@ function Game() {
     setHasClicked(false);
   };
 
-  
-
   const handleModalSubmit = (name) => {
-    fetch('https://sleepy-wave-10213.herokuapp.com/api/v1/rankings', {
-      method: 'POST',
+    fetch("https://sleepy-wave-10213.herokuapp.com/api/v1/rankings", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: name,
-          duration: duration,
-          timer_id: timerId,
-        })
-    }).then(res => {
-      if (res.ok) navigate('/leaderboard')
-    })
-  }
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        duration: duration,
+        timer_id: timerId,
+      }),
+    }).then((res) => {
+      if (res.ok) navigate("/leaderboard");
+    });
+  };
 
   return (
     <Wrapper onClick={removeTargetAndMenu}>
-      <Timer gameOver={gameOver} recordDuration={setDuration} timerId={timerId} setTimerId={setTimerId} />
-      {gameOver && <StyledButton onClick={() => setShowModal(true)}>Next &#9755;</StyledButton>}
-      {showModal && <Modal duration={duration} onSubmit={handleModalSubmit} closeModal={() => setShowModal(false)}/>}
+      {pageLoaded && (
+        <Timer
+          gameOver={gameOver}
+          recordDuration={setDuration}
+          timerId={timerId}
+          setTimerId={setTimerId}
+        />
+      )}
+      {gameOver && (
+        <StyledButton onClick={() => setShowModal(true)}>
+          Next &#9755;
+        </StyledButton>
+      )}
+      {showModal && (
+        <Modal
+          duration={duration}
+          onSubmit={handleModalSubmit}
+          closeModal={() => setShowModal(false)}
+        />
+      )}
       <Image onClick={moveTargetAndMenu} />
       {visible && <Target position={position} onClick={moveTargetAndMenu} />}
       <DropdownMenu
