@@ -7,7 +7,7 @@ import Timer from "./Timer";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 
-function Game() {
+function Game({ imageSrc }) {
   const [visible, setVisible] = useState(false);
   const [position, setPosition] = useState({});
   const [hasClicked, setHasClicked] = useState(false);
@@ -90,14 +90,12 @@ function Game() {
 
   return (
     <Wrapper onClick={removeTargetAndMenu}>
-      {imageLoaded && (
-        <Timer
-          gameOver={gameOver}
-          recordDuration={setDuration}
-          timerId={timerId}
-          setTimerId={setTimerId}
-        />
-      )}
+      <Timer
+        gameOver={gameOver}
+        recordDuration={setDuration}
+        timerId={timerId}
+        setTimerId={setTimerId}
+      />
       {gameOver && (
         <StyledButton onClick={() => setShowModal(true)}>
           Next &#9755;
@@ -110,7 +108,11 @@ function Game() {
           closeModal={() => setShowModal(false)}
         />
       )}
-      <Image onClick={moveTargetAndMenu} imageLoaded={setImageLoaded} />
+      <Image
+        onClick={moveTargetAndMenu}
+        imageLoaded={setImageLoaded}
+        src={imageSrc}
+      />
       {visible && <Target position={position} onClick={moveTargetAndMenu} />}
       <DropdownMenu
         visible={visible}

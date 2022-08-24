@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Start() {
+export default function Start({ready}) {
   return (
     <Wrapper>
-      <StyledLink to="/game">Start!</StyledLink>
+      {ready && <StyledLink to="/game">Start!</StyledLink>}
     </Wrapper>
   );
 }
