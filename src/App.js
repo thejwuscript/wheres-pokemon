@@ -18,7 +18,7 @@ export default function App() {
     <BrowserRouter basename="/wheres-pokemon">
       <Routes>
         <Route path="/" element={<Start ready={imageReady} />} />
-        <Route path="/game" element={<Game imageSrc={PokeImage} />} />
+        {imageReady && <Route path="/game" element={<Game imageSrc={PokeImage} />} />}
         <Route path="/leaderboard" element={<LeaderBoard />} />
       </Routes>
     </BrowserRouter>
